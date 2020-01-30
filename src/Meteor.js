@@ -82,8 +82,6 @@ module.exports = {
     Data._endpoint = endpoint;
     Data._options = options;
 
-    console.info('options', options);
-
     this.ddp = Data.ddp = new DDP({
       endpoint: endpoint,
       SocketConstructor: WebSocket,
