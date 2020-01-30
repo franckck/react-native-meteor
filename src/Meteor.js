@@ -1,5 +1,5 @@
-import { NetInfo, Platform, View } from 'react-native';
-
+import { Platform, View } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
 import EJSON from 'ejson';
@@ -82,25 +82,33 @@ module.exports = {
     Data._endpoint = endpoint;
     Data._options = options;
 
+    console.info('options', options);
+
     this.ddp = Data.ddp = new DDP({
       endpoint: endpoint,
       SocketConstructor: WebSocket,
       ...options,
     });
 
-    NetInfo.isConnected.addEventListener('connectionChange', isConnected => {
+    NetInfo.addEventListener(({ isConnected }) => {
       if (isConnected && Data.ddp.autoReconnect) {
         Data.ddp.connect();
       }
     });
 
+    // NetInfo.isConnected.addEventListener('connectionChange', isConnected => {
+    //   if (isConnected && Data.ddp.autoReconnect) {
+    //     Data.ddp.connect();
+    //   }
+    // });
+
     Data.ddp.on('connected', () => {
       // Clear the collections of any stale data in case this is a reconnect
-      if (Data.db && Data.db.collections) {
-        for (var collection in Data.db.collections) {
-          Data.db[collection].remove({});
-        }
-      }
+      // if (Data.db && Data.db.collections) {
+      //   for (var collection in Data.db.collections) {
+      //     Data.db[collection].remove({});
+      //   }
+      // }
 
       Data.notify('change');
 

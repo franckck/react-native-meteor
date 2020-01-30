@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Data from '../Data';
 import { hashPassword } from '../../lib/utils';
@@ -118,9 +118,11 @@ module.exports = {
     var value = null;
     try {
       value = await AsyncStorage.getItem(TOKEN_KEY);
+      console.info('value in try ... ', value);
     } catch (error) {
       console.warn('AsyncStorage error: ' + error.message);
     } finally {
+      console.info('value in finally ... ', value);
       this._loginWithToken(value);
     }
   },
