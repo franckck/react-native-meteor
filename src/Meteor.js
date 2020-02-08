@@ -94,20 +94,7 @@ module.exports = {
       }
     });
 
-    // NetInfo.isConnected.addEventListener('connectionChange', isConnected => {
-    //   if (isConnected && Data.ddp.autoReconnect) {
-    //     Data.ddp.connect();
-    //   }
-    // });
-
     Data.ddp.on('connected', () => {
-      // Clear the collections of any stale data in case this is a reconnect
-      // if (Data.db && Data.db.collections) {
-      //   for (var collection in Data.db.collections) {
-      //     Data.db[collection].remove({});
-      //   }
-      // }
-
       Data.notify('change');
 
       console.info('Connected to DDP server.');
